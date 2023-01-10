@@ -1,0 +1,39 @@
+﻿
+<MCard>
+    <MTabs Dark BackgroundColor="teal darken-3" ShowArrows="@(true)" SliderColor="teal lighten-3">
+        @foreach (var item in HeaderListModel)
+        {
+            <MTab Value="@item.Herf" Href="@item.Herf">@item.Title</MTab>
+        }
+    </MTabs>
+</MCard>
+
+<MCard Flat>
+    @ChildContent
+</MCard>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public List<HeaderListModel> HeaderListModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        HeaderListModel = new List<HeaderListModel>()
+        {
+            new HeaderListModel()
+            {
+                Title="首页",
+                Herf = "/"
+            },
+            new HeaderListModel()
+            {
+                Title="拍照示例",
+                Herf = "/take-photos"
+            }
+        };
+
+        base.OnInitialized();
+    }
+}
