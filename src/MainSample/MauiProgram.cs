@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Token.Extensions;
-using Video.JsInterop;
+﻿using Video.JsInterop;
 
 namespace Video;
 public static class MauiProgram
@@ -23,8 +21,7 @@ public static class MauiProgram
         builder.Services.AddScoped<HelperJsInterop>();
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddMasaBlazor();
-        builder.Services.AddModuleApplicationAsync<VideoModel>().GetAwaiter().GetResult();
-        builder.Services.AddEventBus();
+        
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();

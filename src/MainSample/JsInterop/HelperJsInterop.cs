@@ -18,9 +18,9 @@ public class HelperJsInterop
     /// <param name="bytes">blob 图片字节</param>
     /// <param name="domId">id 添加到 {id} 的dom的src特性</param>
     /// <returns></returns>
-    public async ValueTask ImgToLink(byte[] bytes, string domId)
+    public async ValueTask<string> ImgToLink(byte[] bytes, string domId)
     {
-        await moduleTask.InvokeVoidAsync("imgToLink", bytes, domId);
+       return await moduleTask.InvokeAsync<string>("imgToLink", bytes, domId);
     }
 
 }

@@ -1,33 +1,37 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Token.Events;
 using Video.JsInterop;
-using Video.Server;
 
 namespace Video.Pages;
 
 public partial class TakePhotos
 {
+    private static string imgUri;
     [Inject]
-    public ITakePhotosService TakePhotosService { get; set; }
+    public HelperJsInterop HelperJsInterop { get; set; }
 
-    [Inject]
-    public IKeyLoadEventBus IKeyLoadEventBus{ get; set; }
-
-    [Inject]
-    public HelperJsInterop HelperJsInterop{ get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        IKeyLoadEventBus.Subscription("70000", async (x) =>
-        {
-            await HelperJsInterop.ImgToLink(x as byte[], "70000");
-        });
-
         await base.OnInitializedAsync();
     }
 
     private async Task TakePhotosClick()
     {
-        await TakePhotosService.CameraAsync(70000);
+        if (MediaPicker.Default.IsCaptureSupported)
+        {
+            var photo = await MediaPicker.Default.CapturePhotoAsync();
+
+            if (photo != null)
+            {
+                await using var stream = new MemoryStream();
+                await using (var sourceStream = await photo.OpenReadAsync())
+                {
+                    await sourceStream.CopyToAsync(stream);
+                }
+
+                imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
+            }
+        }
     }
+
 }

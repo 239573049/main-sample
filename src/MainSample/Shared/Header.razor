@@ -1,15 +1,19 @@
-﻿
+﻿@using System.Diagnostics
+@using System.Text.Json
+
 <MCard>
-    <MTabs Dark BackgroundColor="teal darken-3" ShowArrows="@(true)" SliderColor="teal lighten-3">
+    <MTabs Dark BackgroundColor="teal darken-3" ShowArrows="@(true)" SliderColor="teal lighten-3" Value="selectModel.Herf">
         @foreach (var item in HeaderListModel)
         {
-            <MTab Value="@item.Herf" Href="@item.Herf">@item.Title</MTab>
+            <MTab Value="@item.Herf" Href="@item.Herf" OnClick="() => OnClick(item)">@item.Title</MTab>
         }
     </MTabs>
 </MCard>
 
 <MCard Flat>
-    @ChildContent
+    <div @ontouchmove="TouchMove" @ontouchstart="TouchStart" @ontouchend="TouchEnd" @onmousedown="Mousedown" @onmousemove="Mousemove" @onmouseup="Mouseup" style="height: calc(100vh - 48px)">
+        @ChildContent
+    </div>
 </MCard>
 
 @code {
@@ -18,21 +22,140 @@
 
     public List<HeaderListModel> HeaderListModel { get; set; }
 
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private HeaderListModel selectModel;
+
+    /// <summary>
+    /// 开始X坐标
+    /// </summary>
+    private double _startX;
+
+
+    #region 移动端滑动处理
+
+
+    private void TouchStart(TouchEventArgs args)
+    {
+        var touch = args.ChangedTouches[0];
+        _startX = touch.ScreenX;
+    }
+
+    private void TouchMove(TouchEventArgs args)
+    {
+
+    }
+
+    private void TouchEnd(TouchEventArgs args)
+    {
+        var index = HeaderListModel.IndexOf(selectModel);
+        // 限制过度滑动
+        if (index == HeaderListModel.Count || index > HeaderListModel.Count || args.ChangedTouches.Length == 0)
+        {
+            return;
+        }
+        var touch = args.ChangedTouches[0];
+
+        // 需要滑动80才切换 如果开始坐标x大于 当前结束的x坐标往右边切换tab
+        if ((decimal)_startX - 140 > (decimal)touch.ScreenX)
+        {
+            // 如果右边往左边滑动 当前索引是当前最大数量的话不需要切换
+            if (index == HeaderListModel.Count - 1)
+            {
+                return;
+            }
+            selectModel = HeaderListModel[index + 1];
+            NavigationManager.NavigateTo(selectModel.Herf);
+        }
+        else if ((decimal)_startX + 140 < (decimal)touch.ScreenX)
+        {
+            // 如果左边往右边滑动 当前索引是0的话不需要切换
+            if (index == 0)
+            {
+                return;
+            }
+            selectModel = HeaderListModel[index - 1];
+            NavigationManager.NavigateTo(selectModel.Herf);
+        }
+
+    }
+
+    #endregion
+
+    #region PC滑动处理
+
+
+    private void Mousedown(MouseEventArgs args)
+    {
+        _startX = args.ScreenX;
+    }
+
+    private void Mousemove(MouseEventArgs args)
+    {
+
+    }
+
+    private void Mouseup(MouseEventArgs args)
+    {
+        var index = HeaderListModel.IndexOf(selectModel);
+        // 限制过度滑动
+        if (index == HeaderListModel.Count || index > HeaderListModel.Count)
+        {
+            return;
+        }
+
+        // 需要滑动200才切换 如果开始坐标x大于 当前结束的x坐标往右边切换tab
+        if ((decimal)_startX - 200 > (decimal)args.ScreenX)
+        {
+            // 如果右边往左边滑动 当前索引是当前最大数量的话不需要切换
+            if (index == HeaderListModel.Count - 1)
+            {
+                return;
+            }
+            selectModel = HeaderListModel[index + 1];
+            NavigationManager.NavigateTo(selectModel.Herf);
+        }
+        else if ((decimal)_startX + 200 < (decimal)args.ScreenX)
+        {
+            // 如果左边往右边滑动 当前索引是0的话不需要切换
+            if (index == 0)
+            {
+                return;
+            }
+            selectModel = HeaderListModel[index - 1];
+            NavigationManager.NavigateTo(selectModel.Herf);
+        }
+    }
+
+    #endregion
+
+    private void OnClick(HeaderListModel model)
+    {
+        selectModel = model;
+    }
+
     protected override void OnInitialized()
     {
         HeaderListModel = new List<HeaderListModel>()
         {
-            new HeaderListModel()
+            new ()
             {
                 Title="首页",
                 Herf = "/"
             },
-            new HeaderListModel()
+            new ()
             {
                 Title="拍照示例",
                 Herf = "/take-photos"
+            },new ()
+            {
+                Title = "关于",
+                Herf = "/regards"
             }
         };
+
+        selectModel = HeaderListModel[0];
 
         base.OnInitialized();
     }
