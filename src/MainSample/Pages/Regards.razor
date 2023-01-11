@@ -1,3 +1,39 @@
 ﻿@page "/regards"
+@using Masa.Blazor.Presets
+<div class="content">
+    <h2>示例关于</h2>
 
-<h2>示例关于</h2>
+    <h4>
+        当前示例基于<a style="color: red;" @onclick="()=>GoBrowser(MauiUri)">Maui</a>+
+        <a style="color: red;" @onclick="()=>GoBrowser(BlazorUri)">Blazor</a>+
+        <a style="color: red;" @onclick="()=>GoBrowser(MASAUri)">MASA</a>实现主要是解决一些常见的使用问题提供常用的使用示例
+        如果你感兴趣的话欢迎加入技术交流群：
+        <PCopyableText Text="737776595">737776595</PCopyableText>
+    </h4>
+    <h3 class="token" @onclick="()=>GoBrowser(TokenGithub)">来自Token的贡献</h3>
+</div>
+
+@code{
+    private static string MASAUri = "https://www.masastack.com/blazor";
+
+    private static string BlazorUri = "https://dotnet.microsoft.com/zh-cn/apps/aspnet/web-apps/blazor";
+
+    private static string MauiUri = "https://dotnet.microsoft.com/zh-cn/apps/maui";
+
+    private static string TokenGithub = "https://github.com/239573049";
+
+    private async Task GoBrowser(string uri)
+    {
+        await Browser.OpenAsync(new Uri(uri), BrowserLaunchMode.SystemPreferred);
+    }
+}
+
+<style>
+    .content{
+        text-align:center;
+    }
+
+    .token{
+        color:red;
+    }
+</style>

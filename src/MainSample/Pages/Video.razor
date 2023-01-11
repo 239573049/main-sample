@@ -1,11 +1,14 @@
 ﻿@page "/video"
 @inject IJSRuntime JSRuntime
 
-<video id="videoFeed" width="@widht" height="@height" />
-<canvas class="d-none" id="@CanvasId" width="@widht" height="@height" />
+@if(OpenCameraStatus){
+    <video id="videoFeed" width="@widht" height="@height" />
+    <canvas class="d-none" id="@CanvasId" width="@widht" height="@height" />
+}
 
 <MCard>
-    <MButton Block OnClick="Screenshot">截图</MButton>
+    <MButton Block Disabled="OpenCameraStatus" OnClick="OpenCamera" Style="margin:8px">打开摄像头</MButton>
+    <MButton Block OnClick="Screenshot" Style="margin:8px">截图</MButton>
 </MCard>
 
 <img id="@ImgId" />
@@ -13,16 +16,26 @@
 @code {
     private string CanvasId;
     private string ImgId;
+    private bool OpenCameraStatus;
+    private int widht = 320;
+    private int height = 500;
 
-    private int widht = 520;
-    private int height = 400;
+    private async Task OpenCamera()
+    {
+        if (!OpenCameraStatus)
+        {
+            // 由于打开摄像头的条件必须是用户手动触发如果滑动切换到界面是无法触发的
+            await JSRuntime.InvokeVoidAsync("startVideo", "videoFeed");
+            OpenCameraStatus = true;
+            StateHasChanged();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         // 记录issue https://github.com/dotnet/maui/issues/3694 解决了浏览器没有权限
         // 基本使用的一个博客地址 https://wellsb.com/csharp/aspnet/blazor-webcam-capture
         // 这里是初始化启动获取摄像头
-        await JSRuntime.InvokeVoidAsync("startVideo", "videoFeed");
 
         ImgId = Guid.NewGuid().ToString("N");
         CanvasId = Guid.NewGuid().ToString("N");

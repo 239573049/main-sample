@@ -16,4 +16,15 @@
 	
 	<!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
 	<uses-feature android:name="android.hardware.location.gps" />
+
+	<queries>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="http"/>
+		</intent>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="https"/>
+		</intent>
+	</queries>
 </manifest>
