@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Video.JsInterop;
+namespace MainSample.JsInterop;
 
 public class HelperJsInterop
 {
@@ -23,4 +23,13 @@ public class HelperJsInterop
        return await moduleTask.InvokeAsync<string>("imgToLink", bytes, domId);
     }
 
+    /// <summary>
+    /// 是否Blob
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public async ValueTask RevokeObjectURL(string url)
+    {
+        await moduleTask.InvokeVoidAsync("revokeObjectURL", url);
+    }
 }

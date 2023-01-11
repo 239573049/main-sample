@@ -1,4 +1,4 @@
-﻿namespace Video.Model;
+﻿namespace MainSample.Model;
 
 public class HeaderListModel
 {

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Video;
+namespace MainSample;
 public class Program
 {
     // This is the main entry point of the application.

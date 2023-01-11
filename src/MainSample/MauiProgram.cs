@@ -1,6 +1,9 @@
-﻿using Video.JsInterop;
+﻿using Microsoft.Extensions.Logging;
+using MainSample.JsInterop;
+using Microsoft.AspNetCore.Components.WebView.Maui;
 
-namespace Video;
+namespace MainSample;
+
 public static class MauiProgram
 {
     /// <summary>
@@ -21,7 +24,14 @@ public static class MauiProgram
         builder.Services.AddScoped<HelperJsInterop>();
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddMasaBlazor();
-        
+
+#if ANDROID
+        builder.ConfigureMauiHandlers(handlers =>
+        {
+            handlers.AddHandler<IBlazorWebView, MauiBlazorWebViewHandler>();
+        });
+#endif
+
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();

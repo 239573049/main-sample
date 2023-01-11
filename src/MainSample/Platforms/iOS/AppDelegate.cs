@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Video;
+namespace MainSample;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {

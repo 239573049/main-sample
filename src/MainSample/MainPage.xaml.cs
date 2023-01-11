@@ -1,4 +1,4 @@
-﻿namespace Video;
+﻿namespace MainSample;
 
 public partial class MainPage : ContentPage
 {

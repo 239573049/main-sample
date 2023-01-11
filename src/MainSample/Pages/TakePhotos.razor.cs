@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Video.JsInterop;
+using MainSample.JsInterop;
 
-namespace Video.Pages;
+namespace MainSample.Pages;
 
 public partial class TakePhotos
 {
     private static string imgUri;
+
     [Inject]
     public HelperJsInterop HelperJsInterop { get; set; }
 

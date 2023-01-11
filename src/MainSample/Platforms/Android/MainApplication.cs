@@ -1,7 +1,8 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Video;
+namespace MainSample;
+
 [Application]
 public class MainApplication : MauiApplication
 {
