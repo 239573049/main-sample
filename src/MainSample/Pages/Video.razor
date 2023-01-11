@@ -46,9 +46,4 @@
         await JSRuntime.InvokeAsync<String>("setImgSrc", CanvasId, ImgId, widht, height);
     }
 
-    [JSInvokable]
-    public void ProcessImage(string imageString)
-    {
-        byte[] imageData = Convert.FromBase64String(imageString.Split(',')[1]);
-    }
 }
