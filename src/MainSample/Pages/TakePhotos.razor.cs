@@ -1,4 +1,5 @@
 ﻿using MainSample.JsInterop;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 
 namespace MainSample.Pages;
@@ -10,6 +11,8 @@ public partial class TakePhotos
     [Inject]
     public HelperJsInterop HelperJsInterop { get; set; }
 
+    [Inject]
+    public IPopupService IPopupService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -18,9 +21,9 @@ public partial class TakePhotos
 
     private async Task TakePhotosClick()
     {
-        if (MediaPicker.Default.IsCaptureSupported)
+        if (MediaPicker.IsCaptureSupported)
         {
-            var photo = await MediaPicker.Default.CapturePhotoAsync();
+            var photo = await MediaPicker.CapturePhotoAsync();
 
             if (photo != null)
             {
@@ -31,6 +34,10 @@ public partial class TakePhotos
                 }
 
                 _imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
+            }
+            else
+            {
+                await IPopupService.ToastWarningAsync("获取错误似乎有点问题");
             }
         }
     }

@@ -11,4 +11,9 @@ public class HeaderListModel
     /// 路由
     /// </summary>
     public string Herf { get; init; }
+
+    /// <summary>
+    /// 显示图标
+    /// </summary>
+    public string Icon { get; set; }
 }

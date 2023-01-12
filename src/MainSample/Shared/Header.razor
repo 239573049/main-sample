@@ -4,15 +4,39 @@
 
 <MCard>
     <MTabs Dark BackgroundColor="teal darken-3" ShowArrows="@(true)" SliderColor="teal lighten-3" Value="selectModel.Herf">
+        <MTab>
+            <MAppBarNavIcon @onclick="()=>drawer=true"></MAppBarNavIcon>
+        </MTab>
         @foreach (var item in HeaderListModel)
         {
             <MTab Value="@item.Herf" Href="@item.Herf" OnClick="() => OnClick(item)">@item.Title</MTab>
         }
     </MTabs>
 </MCard>
+<MNavigationDrawer @bind-Value="drawer"
+                   Absolute
+                   Temporary>
+    <MList Nav
+           Dense>
+        <MListItemGroup @bind-Value="group"
+                        ActiveClass="deep-purple--text text--accent-4">
 
-<MCard Flat>
-    <div @ontouchmove="TouchMove" @ontouchstart="TouchStart" @ontouchend="TouchEnd" @onmousedown="Mousedown" @onmousemove="Mousemove" @onmouseup="Mouseup" style="height: calc(100vh - 48px)">
+            @foreach (var item in HeaderListModel)
+            {
+                <MListItem Value="@item.Herf" Href="@item.Herf" OnClick="() => OnClick(item)">
+                    <MListItemIcon>
+                        <MIcon>@item.Icon</MIcon>
+                    </MListItemIcon>
+                    <MListItemTitle>@item.Title</MListItemTitle>
+                </MListItem>
+            }
+
+        </MListItemGroup>
+    </MList>
+</MNavigationDrawer>
+
+<MCard Flat Style="height:100%">
+    <div @ontouchmove="TouchMove" @ontouchstart="TouchStart" @ontouchend="TouchEnd" @onmousedown="Mousedown" @onmousemove="Mousemove" @onmouseup="Mouseup" style="height: 100%">
         @ChildContent
     </div>
 </MCard>
@@ -33,6 +57,15 @@
     /// </summary>
     private double _startX;
 
+    /// <summary>
+    /// 是否显示抽屉
+    /// </summary>
+    private bool drawer;
+
+    /// <summary>
+    /// 当前选择
+    /// </summary>
+    StringNumber group;
 
     #region 移动端滑动处理
 
@@ -143,26 +176,31 @@
             new ()
             {
                 Title="首页",
-                Herf = "/"
+                Herf = "/",
+                Icon="mdi-home"
             },
             new ()
             {
                 Title="拍照示例",
-                Herf = "/take-photos"
+                Herf = "/take-photos",
+                Icon="mdi-camera-iris"
             },
             new ()
             {
                 Title = "蓝牙",
-                Herf = "/bluetooth"
+                Herf = "/bluetooth",
+                Icon="mdi-bluetooth"
             },
             new ()
             {
                 Title = "视频",
-                Herf = "/video"
+                Herf = "/video",
+                Icon="mdi-video-vintage"
             },new ()
             {
                 Title = "关于",
-                Herf = "/regards"
+                Herf = "/regards",
+                Icon="mdi-google-ads"
             }
         };
 

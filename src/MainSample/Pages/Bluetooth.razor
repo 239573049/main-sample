@@ -1,13 +1,27 @@
 ﻿@page "/bluetooth"
 
-<div>
+<div style="height: 100%;height: 88%;">
     @foreach (var device in deviceList)
     {
-        <MCard Width="@("100%")" Style="padding:10px;height: 30px">名称：@device.Value.Name  RSSI：@device.Value.Rssi</MCard>
+        <MCard 
+            Width="@("100%")"
+            OnClick="()=>OnSelect(device.Key)"
+               Class="@(SelectId == device.Key ?"select-card":"")"
+            Style="padding-top: 10px;height: 45px;text-align: center;margin-top: 10px;width: calc(100% - 20px);margin-left: 10px;">
+            名称：@device.Value.Name  RSSI：@device.Value.Rssi
+        </MCard>
     }
 </div>
 
-<MCard Style="padding:10px;">
-    <MButton Block OnClick="StartScanning">扫描设备</MButton>
+<MCard>
+    <MButton Style="margin-top:10px;" Block OnClick="StartScanning">扫描设备</MButton>
+
+    <MButton Style="margin-top:10px;" Block OnClick="OnConnectAsync" Disabled="string.IsNullOrEmpty(SelectId)">连接设备</MButton>
 </MCard>
 
+<style>
+    .select-card{
+        transition:0.8s;
+        background-color:dodgerblue !important;
+    }
+</style>
