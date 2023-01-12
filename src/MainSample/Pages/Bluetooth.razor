@@ -1,0 +1,13 @@
+﻿@page "/bluetooth"
+
+<div>
+    @foreach (var device in deviceList)
+    {
+        <MCard Width="@("100%")" Style="padding:10px;height: 30px">名称：@device.Value.Name  RSSI：@device.Value.Rssi</MCard>
+    }
+</div>
+
+<MCard Style="padding:10px;">
+    <MButton Block OnClick="StartScanning">扫描设备</MButton>
+</MCard>
+

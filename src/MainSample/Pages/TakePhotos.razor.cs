@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
-using MainSample.JsInterop;
+﻿using MainSample.JsInterop;
+using Microsoft.AspNetCore.Components;
 
 namespace MainSample.Pages;
 
 public partial class TakePhotos
 {
-    private static string imgUri;
+    private static string _imgUri;
 
     [Inject]
     public HelperJsInterop HelperJsInterop { get; set; }
@@ -30,7 +30,7 @@ public partial class TakePhotos
                     await sourceStream.CopyToAsync(stream);
                 }
 
-                imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
+                _imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
             }
         }
     }

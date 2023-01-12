@@ -26,5 +26,8 @@
     </array>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/appicon.appiconset</string>
+    <!--Description of the Bluetooth request message-->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>YOUR CUSTOM MESSAGE</string>
 </dict>
 </plist>

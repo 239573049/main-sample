@@ -16,6 +16,18 @@
 	
 	<!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
 	<uses-feature android:name="android.hardware.location.gps" />
+	<!--蓝牙权限-->
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+	<!--Android 12 及更高版本可能需要以下一项或多项额外的运行时权限，具体取决于您使用的库的功能-->
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+	<!--如果要声明应用仅适用于支持 BLE 的设备，请将此行添加到清单中：-->
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
 
 	<queries>
 		<intent>

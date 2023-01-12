@@ -39,6 +39,7 @@
 
         ImgId = Guid.NewGuid().ToString("N");
         CanvasId = Guid.NewGuid().ToString("N");
+        await base.OnInitializedAsync();
     }
 
     private async Task Screenshot()
