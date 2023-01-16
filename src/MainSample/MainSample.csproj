@@ -45,16 +45,21 @@
       <Debugger>Xamarin</Debugger>
       <ApplicationTitle>MainSample</ApplicationTitle>
       <ApplicationId>com.main.sample</ApplicationId>
-      <EnableLLVM>False</EnableLLVM>
+      <EnableLLVM>True</EnableLLVM>
       <ApplicationIdGuid>DB2B6AB2-7399-4CD9-B6DA-19CE82C9E02E</ApplicationIdGuid>
+      <AndroidUseAapt2>True</AndroidUseAapt2>
+      <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
       <Debugger>Xamarin</Debugger>
       <ApplicationTitle>MainSample</ApplicationTitle>
       <ApplicationId>com.main.sample</ApplicationId>
-      <EnableLLVM>False</EnableLLVM>
+      <EnableLLVM>True</EnableLLVM>
       <ApplicationIdGuid>DB2B6AB2-7399-4CD9-B6DA-19CE82C9E02E</ApplicationIdGuid>
+      <AndroidUseAapt2>True</AndroidUseAapt2>
+      <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
+      <AndroidPackageFormat>apk</AndroidPackageFormat>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">

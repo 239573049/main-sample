@@ -23,22 +23,29 @@ public partial class TakePhotos
     {
         if (MediaPicker.IsCaptureSupported)
         {
-            var photo = await MediaPicker.CapturePhotoAsync();
-
-            if (photo != null)
+            _ = Task.Run(async () =>
             {
-                await using var stream = new MemoryStream();
-                await using (var sourceStream = await photo.OpenReadAsync())
+
+                var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
                 {
-                    await sourceStream.CopyToAsync(stream);
-                }
+                    Title = "选择您的照片"
+                });
 
-                _imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
-            }
-            else
-            {
-                await IPopupService.ToastWarningAsync("获取错误似乎有点问题");
-            }
+                if (photo != null)
+                {
+                    await using var stream = new MemoryStream();
+                    await using (var sourceStream = await photo.OpenReadAsync())
+                    {
+                        await sourceStream.CopyToAsync(stream);
+                    }
+
+                    _imgUri = await HelperJsInterop.ImgToLink(stream.ToArray(), "70000");
+                }
+                else
+                {
+                    await IPopupService.ToastWarningAsync("获取错误似乎有点问题");
+                }
+            });
         }
     }
 

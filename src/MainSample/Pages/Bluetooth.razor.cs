@@ -67,6 +67,7 @@ public partial class Bluetooth
                 //{
                 //    return;
                 //}
+
                 if (deviceList.Any(x => x.Key == address))
                 {
                     deviceList.Remove(address, out var value);
